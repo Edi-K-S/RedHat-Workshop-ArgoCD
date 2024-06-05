@@ -10,4 +10,4 @@ deployment:
   - name: yellow
     replicas: 1
     color: yellow
-    weight: 50
+    weight: 5
