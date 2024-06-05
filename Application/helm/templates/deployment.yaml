@@ -21,7 +21,19 @@ spec:
             name: '{{ .Chart.Name }}-html'
             defaultMode: 420
       containers:
-        livenessProbe:
+        - resources: {}
+          terminationMessagePath: /dev/termination-log
+          name: {{ .Chart.Name }} # hello-world
+          ports:
+            - containerPort: {{ .Values.containers.containerPort }} # 8080
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+                # Update with the image you build in part 1
+          image: {{ .Values.containers.image }}:{{ .Values.containers.tag }} # 'quay.io/edi-redhat/web-rh-workshop:v2'
+          volumeMounts:
+          - name: index-html
+            mountPath: /tmp/html # this will mount the html.index file to it application location
+        - livenessProbe:
           httpGet:
             path: /health/liveliness
             port: {{ .Values.containers.containerPort }}
@@ -31,7 +43,7 @@ spec:
           periodSeconds: 10
           successThreshold: 1
           failureThreshold: 3
-        readinessProbe:
+        - readinessProbe:
           httpGet:
             path: /health/readiness # this check the application url path
             port: {{ .Values.containers.containerPort  }} # In which port the Application is listening
@@ -41,21 +53,6 @@ spec:
           periodSeconds: 10 # the abount of time to wait between checks
           successThreshold: 1 # count to decalre seccessfull 
           failureThreshold: 3 # count to decalre failure 
-        - resources: {}
-          env:
-            - name: PORT
-              value: {{ .Values.containers.containerPort | quote }}
-          terminationMessagePath: /dev/termination-log
-          name: {{ .Chart.Name }} # hello-world
-          ports:
-            - containerPort: {{ .Values.containers.containerPort }} # 8080
-              protocol: TCP
-          imagePullPolicy: IfNotPresent
-# Update with the image you build in part 1
-          image: {{ .Values.containers.image }}:{{ .Values.containers.tag }} # 'quay.io/edi-redhat/web-rh-workshop:v2'
-          volumeMounts:
-          - name: index-html
-            mountPath: /tmp/html # this will mount the html.index file to it application location
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
   strategy:
