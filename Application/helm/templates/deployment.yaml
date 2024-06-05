@@ -24,6 +24,9 @@ spec:
         - resources: {}
           terminationMessagePath: /dev/termination-log
           name: {{ .Chart.Name }} # hello-world
+          env:
+          - name: PORT
+            value: {{ .Values.containers.containerPort | quote }}
           ports:
             - containerPort: {{ .Values.containers.containerPort }} # 8080
               protocol: TCP
