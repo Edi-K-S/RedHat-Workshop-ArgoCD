@@ -24,7 +24,7 @@ spec:
               protocol: TCP
           imagePullPolicy: IfNotPresent
 # Update with the image you build in part 1
-          image: 'quay.io/edi-redhat/web:v1'
+          image: 'quay.io/edi-redhat/web-rh-workshop:v1'
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
   strategy:
