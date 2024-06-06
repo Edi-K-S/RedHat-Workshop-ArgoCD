@@ -7,7 +7,7 @@ dependencies:
     repository: oci://ghcr.io/edi-k-s/helm
     version: "1.0.0"
     alias: deploy1
-  - name: workshop-test
+  - name: user12-hello-world-helm
     repository: oci://ghcr.io/edi-k-s/helm
     version: "1.0.0"
     alias: deploy2
